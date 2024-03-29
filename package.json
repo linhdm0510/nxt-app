@@ -12,13 +12,18 @@
     "commitmsg": "commitlint -E HUSKY_GIT_PARAMS"
   },
   "dependencies": {
+    "antd": "^5.15.4",
+    "clsx": "^2.1.0",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.4",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
-    "eslint": "8.41.0",
-    "eslint-config-next": "13.4.4"
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
@@ -26,9 +31,8 @@
     "lint-staged": "^15.2.2",
     "postcss": "^8",
     "prettier": "^3.2.5",
-    "tailwindcss": "^3.3.0",
-    "@commitlint/cli": "^17.6.5",
-    "@commitlint/config-conventional": "^17.6.5"
+    "sass": "^1.72.0",
+    "tailwindcss": "^3.3.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint"
