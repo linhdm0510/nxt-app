@@ -1,0 +1,38 @@
+.base-button-container {
+	.position-icon-left {
+		&.ant-btn {
+			&>span:last-child {
+				display: flex;
+				justify-content: center;
+				flex: 1;
+			}
+		}
+	}
+
+	button:disabled {
+		background-color: #ececec;
+	}
+}
+
+.secondary-btn.ant-btn-default {
+	background-color: #ffffff;
+	border: 1px solid #cce8f6;
+}
+
+.secondary-btn.ant-btn-primary {
+	background-color: #cce8f6;
+	border: none;
+	box-shadow: none;
+
+	&:hover {
+		background-color: #e6f4fb;
+	}
+
+	&:focus {
+		background-color: #e6f4fb;
+	}
+
+	&:active {
+		background-color: #99d1ee;
+	}
+}
