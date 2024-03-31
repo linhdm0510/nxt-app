@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@reduxjs/toolkit": "^2.2.2",
     "antd": "^5.15.4",
+    "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
