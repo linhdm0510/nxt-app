@@ -1,105 +1,115 @@
 'use client';
 import { Button } from 'antd';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Space, Tag } from 'antd';
 import { useRouter } from 'next/navigation';
 import TableComponent from '../../components/tables/TableComponent';
 import { LoadingContext } from '../../common/contexts/LoadingContext';
 import productListService from './services';
+import Link from 'next/link';
 
 const List = () => {
   const { setIsLoading } = useContext(LoadingContext);
 
   const router = useRouter();
 
+  const [dataList, setDataList] = useState([])
+
+  const showModal = () => {
+    // todo
+  };
+
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'title',
+      key: 'title',
       render: (text) => <a>{text}</a>,
+      onCell: (record, rowIndex) => {
+        return {
+          onClick: () => {
+              router.push(`/detail/${record.key}`);
+          },
+      };
+    },
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Brand',
+      dataIndex: 'brand',
+      key: 'brand',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
+      title: 'Ratting',
+      dataIndex: 'rating',
+      key: 'rating',
+    },
+    {
+      title: 'Thumbnail',
+      key: 'thumbnail',
+      dataIndex: 'thumbnail',
+      render: (_, {thumbnail}) => (
         <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
+        <Link href={thumbnail} target='_blank'>thumbnail</Link>
         </>
-      ),
+      )
     },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
+          <Button
+            className="h-[48px] w-auto px-5 py-2 text-center text-[14px]
+          font-medium tracking-normal text-[#FFFFFF]"
+            onClick={() => showModal()}
+          >
+            Edit
+          </Button>
+          <Button
+            className="h-[48px] w-auto px-5 py-2 text-center text-[14px]
+          font-medium tracking-normal text-[#FFFFFF]"
+            onClick={() => showModal()}
+          >
+            Delete
+          </Button>
         </Space>
       ),
     },
   ];
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-  const showModal = () => {
-    // todo
-    router.push('/detail/1');
-  };
 
   useEffect(() => {
     const getProductList = async () => {
       setIsLoading(true);
       const res = await productListService.getList();
+      if(res.status === 200 && res.data) {
+        const data = res.data.products
+        const mappingData = data.map((item) => {
+          return {
+            key: item.id,
+            title: item?.title || '--',
+            brand: item?.brand || '--',
+            discountPercentage: item?.discountPercentage || '--',
+            price: item?.price || '--',
+            rating: item?.rating || '--',
+            stock: item?.stock || '--',
+            description: item?.description || '--',
+            thumbnail: item?.thumbnail || '--'
+          }
+        })
+        setDataList(mappingData)
+      } 
       setIsLoading(false);
-      console.log(res);
     };
     getProductList();
   }, [setIsLoading]);
 
   return (
-    <div className="flex min-h-screen flex-col  p-24">
+    <div className="flex min-h-screen flex-col p-24 bg-[#3C465B14]">
       <div className="flex items-center justify-between">
         <span className="text-[30px] font-semibold">Products List</span>
         <Button
@@ -110,7 +120,11 @@ const List = () => {
           Create new Product
         </Button>
       </div>
-      <TableComponent data={data} columns={columns} className="mt-5" />
+      <TableComponent 
+        data={dataList} 
+        columns={columns} 
+        className="mt-5" 
+      />
     </div>
   );
 };
