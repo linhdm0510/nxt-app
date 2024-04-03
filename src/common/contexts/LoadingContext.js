@@ -7,9 +7,6 @@ export const LoadingContext = createContext({
   },
 });
 
-// interface LoadingProviderProps {
-//   children: ReactNode;
-// }
 
 /**
  * use in child-component of the provider:
