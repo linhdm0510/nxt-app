@@ -17,10 +17,7 @@ export default function Datail({params}) {
       const res = await ProductDetailService.getDetail(params.id);
       if(res.status === 200 && res.data) {
         const detail = res.data || {}
-        console.log(detail)
         setDataDetail(detail)
-      } else {
-        console.log(17)
       }
       setIsLoading(false);
     };
